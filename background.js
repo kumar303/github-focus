@@ -89,7 +89,17 @@ async function checkNotifications() {
         // ones not assigned to you. This would also require tracking
         // GitHub user names.
 
-        // TODO: Ignore merged PRs for review_requested
+        if (
+          notification.subject.type === 'PullRequest' &&
+          !(await isOpenPR(notification))
+        ) {
+          console.log(
+            `${logId}: Ignoring non-open PR for notification ${
+              notification.id
+            }`,
+          );
+          return;
+        }
 
         await browser.notifications.create(notification.id, {
           type: 'basic',
@@ -106,6 +116,17 @@ async function checkNotifications() {
   } catch (error) {
     console.error(`${logId}: Caught exception: ${error}`);
   }
+}
+
+async function isOpenPR(notification) {
+  const number = getIdFromApiUrl(notification.subject.url);
+  const response = await apiRequest(
+    `${notification.repository.url}/pulls/${number}`,
+  );
+  const pr = await response.json();
+
+  const isOpen = pr.state === 'open';
+  return isOpen;
 }
 
 function getIdFromApiUrl(apiUrl) {
