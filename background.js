@@ -163,6 +163,10 @@ async function start() {
     // Check every 10 minutes:
     const interval = 60 * 1000 * 10;
     setInterval(checkNotifications, interval);
+
+    // Kick off the first call:
+    checkNotifications();
+
   } catch (error) {
     console.error(`${logId}: Caught exception: ${error}`);
   }
