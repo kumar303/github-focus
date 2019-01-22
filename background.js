@@ -54,6 +54,7 @@ async function checkNotifications() {
     // TODO: add a starting point timestamp ('since')
     const response = await apiRequest('https://api.github.com/notifications');
     const notifications = await response.json();
+    let zeroNotifications = true;
 
     // TODO: pagination, maybe
     notifications.forEach(async (notification) => {
@@ -75,6 +76,7 @@ async function checkNotifications() {
         notification.reason === 'mention' ||
         notification.reason === 'comment'
       ) {
+        zeroNotifications = false;
         const url = getNotificationURL(notification);
         notificationURLs[notification.id] = url;
         console.log(`${logId}: Showing notification`, notification, url);
@@ -87,6 +89,10 @@ async function checkNotifications() {
         });
       }
     });
+
+    if (zeroNotifications) {
+      console.log(`${logId}: No important notifications to show`);
+    }
   } catch (error) {
     console.error(`${logId}: Caught exception: ${error}`);
   }
