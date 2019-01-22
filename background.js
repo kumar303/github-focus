@@ -83,6 +83,10 @@ async function checkNotifications() {
         notificationURLs[notification.id] = url;
         console.log(`${logId}: Showing notification`, notification, url);
 
+        // TODO: Check the PR assignee for review_requested and skip
+        // ones not assigned to you. This would also require tracking
+        // GitHub user names.
+
         await browser.notifications.create(notification.id, {
           type: 'basic',
           title: notification.subject.title,
