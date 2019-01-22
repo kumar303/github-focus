@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "build-alpha": "web-ext sign",
     "start": "web-ext run",
     "pkg": "web-ext build"
   },
