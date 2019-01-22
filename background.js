@@ -150,18 +150,21 @@ async function handleNotificationClick(notificationId) {
   try {
     const url = notificationURLs[notificationId];
     if (url) {
-      const tab = await browser.tabs.create({
-        url,
-      });
-      await browser.windows.update(tab.windowId, {
-        focused: true,
-      });
+      const tab = await browser.tabs.create({ url });
+      await browser.windows.update(tab.windowId, { focused: true });
+
+      const cleared = await browser.notifications.clear(notificationId);
+      if (!cleared) {
+        console.warn(
+          `${logId}: browser.notifications.clear(${notificationId}) returned false`,
+        );
+      }
 
       await markNotificationAsRead(notificationId);
 
-      // Since I can't quite tell if the PATCH to make a notification
-      // read is working or not (maybe caching?), set local data to track
-      // it, too.
+      // Since I can't quite tell if the API PATCH to make a notification
+      // read is working or not (I think it's just heavily cached), set
+      // local data to track it, too.
       readNotifications[notificationId] = true;
     } else {
       console.warn(`${logId}: No URL for notification ID ${notificationId}`);
