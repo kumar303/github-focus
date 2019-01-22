@@ -50,9 +50,7 @@ async function checkNotifications() {
   notificationURLs = {};
 
   // TODO: add a starting point timestamp ('since')
-  const response = await apiRequest(
-    'https://api.github.com/notifications',
-  );
+  const response = await apiRequest('https://api.github.com/notifications');
   const notifications = await response.json();
 
   // TODO: pagination, maybe
@@ -147,18 +145,22 @@ async function handleNotificationClick(notificationId) {
       console.warn(`${logId}: No URL for notification ID ${notificationId}`);
     }
   } catch (error) {
-    console.error(`Caught exception: ${error}`);
+    console.error(`${logId}: Caught exception: ${error}`);
   }
 }
 
 async function start() {
-  const pref = await browser.storage.local.get();
-  accessToken = pref.option;
+  try {
+    const pref = await browser.storage.local.get();
+    accessToken = pref.option;
 
-  browser.notifications.onClicked.addListener(handleNotificationClick);
+    browser.notifications.onClicked.addListener(handleNotificationClick);
 
-  // Check every 10 minutes:
-  setInterval(checkNotifications, 60 * 1000 * 10);
+    // Check every 10 minutes:
+    setInterval(checkNotifications, 60 * 1000 * 10);
+  } catch (error) {
+    console.error(`${logId}: Caught exception: ${error}`);
+  }
 }
 
 start();

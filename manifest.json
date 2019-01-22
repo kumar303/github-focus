@@ -1,4 +1,9 @@
 {
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "github-focus-alpha@farmdev.com"
+    }
+  },
   "manifest_version": 2,
   "name": "GitHub Focus",
   "version": "1.0.0",
