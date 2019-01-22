@@ -122,8 +122,7 @@ async function markNotificationAsRead(id) {
   await apiRequest(
     `https://api.github.com/notifications/threads/${id}`,
     {
-      // The docs say this isn't necessary.
-      // body: JSON.stringify({ last_read_at: now.toISOString() }),
+      body: JSON.stringify({ last_read_at: now.toISOString() }),
       method: 'PATCH',
     },
     {
