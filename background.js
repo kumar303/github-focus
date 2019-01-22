@@ -52,7 +52,9 @@ async function checkNotifications() {
     notificationURLs = {};
 
     // TODO: add a starting point timestamp ('since')
-    const response = await apiRequest('https://api.github.com/notifications');
+    const response = await apiRequest(
+      'https://api.github.com/notifications?participating=true',
+    );
     const notifications = await response.json();
     let zeroNotifications = true;
 
