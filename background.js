@@ -187,6 +187,9 @@ async function start() {
 
     // Kick off the first call:
     checkNotifications();
+
+    browser.browserAction.onClicked.addListener(checkNotifications);
+
   } catch (error) {
     console.error(`${logId}: Caught exception: ${error}`);
   }
