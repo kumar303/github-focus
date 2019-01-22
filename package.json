@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build-alpha": "web-ext sign",
+    "build-alpha": "web-ext sign --id github-focus-alpha@farmdev.com",
     "start": "web-ext run",
     "pkg": "web-ext build"
   },

@@ -13,7 +13,7 @@ yarn start
 
 ## Build an alpha release
 
-First, **make sure the `manifest.json` ID is an alpha ID**. Next, run this:
+First, bump the version in `manifest.json` and **make sure the `manifest.json` ID is an alpha ID**. Next, run this:
 
 ```
 WEB_EXT_API_KEY=jwt_issuer_from_devhub WEB_EXT_API_SECRET=jwt_secret_from_devhub yarn build-alpha
