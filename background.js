@@ -66,7 +66,7 @@ async function checkNotifications() {
       ) {
         const url = getNotificationURL(notification);
         notificationURLs[notification.id] = url;
-        console.log('Showing notification', notification, url);
+        console.log(`${logId}: Showing notification`, notification, url);
 
         await browser.notifications.create(notification.id, {
           type: 'basic',
@@ -161,8 +161,7 @@ async function start() {
     browser.notifications.onClicked.addListener(handleNotificationClick);
 
     // Check every 10 minutes:
-    // const interval = 60 * 1000 * 10;
-    const interval = 60 * 1000;
+    const interval = 60 * 1000 * 10;
     setInterval(checkNotifications, interval);
   } catch (error) {
     console.error(`${logId}: Caught exception: ${error}`);

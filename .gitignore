@@ -4,3 +4,6 @@
 # Build artifacts.
 node_modules
 web-ext-artifacts
+
+# I don't know why web-ext generates this when we set an ID.
+.web-extension-id
