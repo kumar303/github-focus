@@ -5,6 +5,7 @@ const HTTP_STATUS_RESET = 205;
 
 var accessToken;
 var notificationURLs = {};
+var readNotifications = {};
 
 async function getAccessToken() {
   if (!accessToken) {
@@ -59,6 +60,16 @@ async function checkNotifications() {
       if (!notification.unread) {
         return;
       }
+      if (readNotifications[notification.id]) {
+        console.log(
+          `${logId}: Relying on LOCAL cache for unread state of notification ${
+            notification.id
+          }`,
+        );
+        return;
+      }
+
+      // Only show desktop notifications for the ones we care about.
       if (
         notification.reason === 'review_requested' ||
         notification.reason === 'mention' ||
@@ -122,6 +133,9 @@ async function markNotificationAsRead(id) {
   await apiRequest(
     `https://api.github.com/notifications/threads/${id}`,
     {
+      // I can't tell if this is necessary or not. The API docs say it's
+      // not but I think heavy caching makes notifications appear unread
+      // for a long time.
       body: JSON.stringify({ last_read_at: now.toISOString() }),
       method: 'PATCH',
     },
@@ -144,6 +158,11 @@ async function handleNotificationClick(notificationId) {
       });
 
       await markNotificationAsRead(notificationId);
+
+      // Since I can't quite tell if the PATCH to make a notification
+      // read is working or not (maybe caching?), set local data to track
+      // it, too.
+      readNotifications[notificationId] = true;
     } else {
       console.warn(`${logId}: No URL for notification ID ${notificationId}`);
     }
@@ -165,7 +184,6 @@ async function start() {
 
     // Kick off the first call:
     checkNotifications();
-
   } catch (error) {
     console.error(`${logId}: Caught exception: ${error}`);
   }
