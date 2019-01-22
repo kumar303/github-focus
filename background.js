@@ -44,37 +44,41 @@ async function apiRequest(url, requestOptions, callOptions) {
 }
 
 async function checkNotifications() {
-  console.log(`${logId}: Checking notifications`);
+  try {
+    console.log(`${logId}: Checking notifications`);
 
-  // Clear old notifications.
-  notificationURLs = {};
+    // Clear old notifications.
+    notificationURLs = {};
 
-  // TODO: add a starting point timestamp ('since')
-  const response = await apiRequest('https://api.github.com/notifications');
-  const notifications = await response.json();
+    // TODO: add a starting point timestamp ('since')
+    const response = await apiRequest('https://api.github.com/notifications');
+    const notifications = await response.json();
 
-  // TODO: pagination, maybe
-  notifications.forEach(async (notification) => {
-    if (!notification.unread) {
-      return;
-    }
-    if (
-      notification.reason === 'review_requested' ||
-      notification.reason === 'mention' ||
-      notification.reason === 'comment'
-    ) {
-      const url = getNotificationURL(notification);
-      notificationURLs[notification.id] = url;
-      console.log('Showing notification', notification, url);
+    // TODO: pagination, maybe
+    notifications.forEach(async (notification) => {
+      if (!notification.unread) {
+        return;
+      }
+      if (
+        notification.reason === 'review_requested' ||
+        notification.reason === 'mention' ||
+        notification.reason === 'comment'
+      ) {
+        const url = getNotificationURL(notification);
+        notificationURLs[notification.id] = url;
+        console.log('Showing notification', notification, url);
 
-      await browser.notifications.create(notification.id, {
-        type: 'basic',
-        title: notification.subject.title,
-        message: notification.repository.full_name,
-        eventTime: Date.parse(notification.updated_at),
-      });
-    }
-  });
+        await browser.notifications.create(notification.id, {
+          type: 'basic',
+          title: notification.subject.title,
+          message: notification.repository.full_name,
+          eventTime: Date.parse(notification.updated_at),
+        });
+      }
+    });
+  } catch (error) {
+    console.error(`${logId}: Caught exception: ${error}`);
+  }
 }
 
 function getIdFromApiUrl(apiUrl) {
