@@ -89,6 +89,8 @@ async function checkNotifications() {
         // ones not assigned to you. This would also require tracking
         // GitHub user names.
 
+        // TODO: Ignore merged PRs for review_requested
+
         await browser.notifications.create(notification.id, {
           type: 'basic',
           title: notification.subject.title,
