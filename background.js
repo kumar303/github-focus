@@ -161,7 +161,9 @@ async function start() {
     browser.notifications.onClicked.addListener(handleNotificationClick);
 
     // Check every 10 minutes:
-    setInterval(checkNotifications, 60 * 1000 * 10);
+    // const interval = 60 * 1000 * 10;
+    const interval = 60 * 1000;
+    setInterval(checkNotifications, interval);
   } catch (error) {
     console.error(`${logId}: Caught exception: ${error}`);
   }
