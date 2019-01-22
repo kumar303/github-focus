@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "GitHub Focus",
+  "version": "1.0.0",
+  "description": "",
+  "icons": {
+    "48": "icons/icons8-topic-push-notification-48.png",
+    "64": "icons/icons8-topic-push-notification-64.png",
+    "96": "icons/icons8-topic-push-notification-96.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "options/options.html"
+  },
+  "permissions": [
+    "notifications",
+    "storage",
+    "tabs"
+  ]
+}

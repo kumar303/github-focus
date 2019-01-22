@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      .optionValue {
+        display: block;
+        margin: 1em 0;
+        width: 100%;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .error {
+        color: red;
+      }
+
+      .info {
+        color: green;
+      }
+
+      .saveButton {
+        padding: 12px 24px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <section>
+      <p class="title"><b>GitHub personal access token</b></p>
+      <p>
+      Create an access token with the <code>notification</code> scope using <a target="_blank" href="https://github.com/settings/tokens/new?scopes=notifications&description=GitHub%20Focus%20extension">this link</a> and enter it in the field below. Example: <code>a2b3f20ef9d6eeb7752c89b896e44a7b39c5243c</code>.
+      </p>
+      <div class="info"><span></span>&nbsp;</div>
+      <input type="text" class="optionValue">
+      <div class="buttons">
+        <button class="saveButton">Save Preferences</button>
+      </div>
+    </section>
+
+    <script src="options.js"></script>
+  </body>
+
+</html>

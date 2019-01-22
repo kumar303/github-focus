@@ -1,0 +1,19 @@
+{
+  "name": "github-focus",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "web-ext run",
+    "pkg": "web-ext build"
+  },
+  "author": "Kumar McMillan",
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "web-ext": "^2.9.2"
+  },
+  "webExt": {
+    "run": {
+      "browserConsole": true
+    }
+  }
+}
