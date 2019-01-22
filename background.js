@@ -154,17 +154,17 @@ async function markNotificationAsRead(id) {
 
 async function handleNotificationClick(notificationId) {
   try {
+    const cleared = await browser.notifications.clear(notificationId);
+    if (!cleared) {
+      console.warn(
+        `${logId}: browser.notifications.clear(${notificationId}) returned false`,
+      );
+    }
+
     const url = notificationURLs[notificationId];
     if (url) {
       const tab = await browser.tabs.create({ url });
       await browser.windows.update(tab.windowId, { focused: true });
-
-      const cleared = await browser.notifications.clear(notificationId);
-      if (!cleared) {
-        console.warn(
-          `${logId}: browser.notifications.clear(${notificationId}) returned false`,
-        );
-      }
 
       await markNotificationAsRead(notificationId);
 
@@ -195,7 +195,6 @@ async function start() {
     checkNotifications();
 
     browser.browserAction.onClicked.addListener(checkNotifications);
-
   } catch (error) {
     console.error(`${logId}: Caught exception: ${error}`);
   }
