@@ -75,8 +75,10 @@ async function checkNotifications() {
       // Only show desktop notifications for the ones we care about.
       if (
         notification.reason === 'review_requested' ||
-        notification.reason === 'mention' ||
-        notification.reason === 'comment'
+        notification.reason === 'mention'
+        // TODO: I would like to see comments on PRs that I'm reviewing
+        // but not updates to issues that I have commented on.
+        // notification.reason === 'comment'
       ) {
         zeroNotifications = false;
         const url = getNotificationURL(notification);
