@@ -31,6 +31,7 @@ yarn start
 
 * Pause desktop notifications while not working or while trying to do uninterrupted work
 * Support Chrome
+* Make "important activity" configurable
 
 ## Build an alpha release
 
