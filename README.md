@@ -1,6 +1,26 @@
+This is a browser extension that gives you desktop notifications for important [GitHub](https://github.com/) activity.
+
+This extension is tailored to my workflow; I couldn't find any existing extensions or other solutions.
+I watch a lot of repos which lets me keep up with all pull requests and issues but I don't want my email or anything else to send me a desktop notification for all of that.
+
+Currently the extension only sends you desktop notifications for:
+
+* Review requests
+* Mentions
+
+## TODO
+
+* Pause desktop notifications while not working or while trying to do uninterrupted work
+
+## Usage
+
 You will need to generate a GitHub [personal access token](https://github.com/settings/tokens/new?scopes=notifications&description=Notifier%20for%20GitHub%20extension) with the `notifications` scope.
 This [link](https://github.com/settings/tokens/new?scopes=notifications&description=GitHub%20Focus%20extension) will begin creating one.
 
+Install the extension [from source into Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Temporary_Installation_in_Firefox).
+Go to `about:addons`, find the add-on, and click Preferences to enter your access token.
+
+You will now begin receiving desktop notifications.
 
 ## Development
 
