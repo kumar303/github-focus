@@ -3,14 +3,10 @@ This is a browser extension that gives you desktop notifications for important [
 This extension is tailored to my workflow; I couldn't find any existing extensions or other solutions.
 I watch a lot of repos which lets me keep up with all pull requests and issues but I don't want my email or anything else to send me a desktop notification for all of that.
 
-Currently the extension only sends you desktop notifications for:
+Currently the extension only sends desktop notifications for:
 
 * Review requests
 * Mentions
-
-## TODO
-
-* Pause desktop notifications while not working or while trying to do uninterrupted work
 
 ## Usage
 
@@ -30,6 +26,11 @@ Make sure you have Firefox, Node.js (8 or higher), and yarn installed. Start dev
 yarn
 yarn start
 ```
+
+## TODO
+
+* Pause desktop notifications while not working or while trying to do uninterrupted work
+* Support Chrome
 
 ## Build an alpha release
 
