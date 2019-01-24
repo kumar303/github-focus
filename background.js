@@ -74,9 +74,10 @@ async function checkNotifications() {
 
       // Only show desktop notifications for the ones we care about.
       if (
-        notification.reason === 'review_requested' ||
+        notification.reason === 'assign' ||
+        notification.reason === 'comment' ||
         notification.reason === 'mention' ||
-        notification.reason === 'comment'
+        notification.reason === 'review_requested'
       ) {
         if (
           notification.reason === 'comment' &&
