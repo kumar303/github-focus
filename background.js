@@ -75,18 +75,23 @@ async function checkNotifications() {
       // Only show desktop notifications for the ones we care about.
       if (
         notification.reason === 'review_requested' ||
-        notification.reason === 'mention'
-        // TODO: I would like to see comments on PRs that I'm reviewing
-        // but not updates to issues that I have commented on.
-        // notification.reason === 'comment'
+        notification.reason === 'mention' ||
+        notification.reason === 'comment'
       ) {
-        zeroNotifications = false;
-        const url = getNotificationURL(notification);
-        notificationURLs[notification.id] = url;
-        console.log(`${logId}: Showing notification`, notification, url);
+        if (
+          notification.reason === 'comment' &&
+          notification.subject.type !== 'PullRequest'
+        ) {
+          console.log(
+            `${logId}: Ignoring comment for subject type ${
+              notification.subject.type
+            }`,
+          );
+          return;
+        }
 
         // TODO: Check the PR assignee for review_requested and skip
-        // ones not assigned to you. This would also require tracking
+        // ones not assigned to me. This would also require tracking
         // GitHub user names.
 
         if (
@@ -101,12 +106,19 @@ async function checkNotifications() {
           return;
         }
 
+        zeroNotifications = false;
+        const url = getNotificationURL(notification);
+        notificationURLs[notification.id] = url;
+
+        console.log(`${logId}: Showing notification`, notification, url);
         await browser.notifications.create(notification.id, {
           type: 'basic',
           title: notification.subject.title,
           message: notification.repository.full_name,
           eventTime: Date.parse(notification.updated_at),
         });
+      } else {
+        console.log(`${logId} Ignoring notification`, notification);
       }
     });
 
