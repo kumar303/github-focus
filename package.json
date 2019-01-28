@@ -1,6 +1,6 @@
 {
   "name": "github-focus",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "scripts": {
     "build-alpha": "web-ext sign --id github-focus-alpha@farmdev.com && mv web-ext-artifacts/*.xpi ./dist/xpi/",
