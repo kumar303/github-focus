@@ -1,19 +1,25 @@
 This is a browser extension that gives you desktop notifications for important [GitHub](https://github.com/) activity.
 
-This extension is tailored to my workflow; I couldn't find any existing extensions or other solutions.
-I watch a lot of repos which lets me keep up with all pull requests and issues but I don't want my email or anything else to send me a desktop notification for all of that.
+Why? I watch a lot of repositories. This lets me keep up with all pull requests and issues but I don't want instant notifications for all of that activity.
+I do want instant notifications but only for specific types of acitivity and I want to pause them while not working. I couldn't find an existing solution for this.
 
 Currently the extension only sends desktop notifications for:
 
 * Review requests
 * Mentions
+* Assignments
+* Comments on pull requests that you're participating in
+
+## Installation
+
+You can install the latest built version into Firefox from the [dist](./dist) directory. These builds may be out of date.
+
+Alternatively, you can clone the repository and install the extension [from source into Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Temporary_Installation_in_Firefox).
 
 ## Usage
 
-You will need to generate a GitHub [personal access token](https://github.com/settings/tokens/new?scopes=notifications&description=Notifier%20for%20GitHub%20extension) with the `notifications` scope.
+Generate a GitHub [personal access token](https://github.com/settings/tokens/new?scopes=notifications&description=Notifier%20for%20GitHub%20extension) with the `notifications` scope.
 This [link](https://github.com/settings/tokens/new?scopes=notifications&description=GitHub%20Focus%20extension) will begin creating one.
-
-Install the extension [from source into Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Temporary_Installation_in_Firefox).
 Go to `about:addons`, find the add-on, and click Preferences to enter your access token.
 
 You will now begin receiving desktop notifications.
@@ -41,7 +47,7 @@ First, bump the version in `manifest.json` and **make sure the `manifest.json` I
 WEB_EXT_API_KEY=jwt_issuer_from_devhub WEB_EXT_API_SECRET=jwt_secret_from_devhub yarn build-alpha
 ```
 
-Move the file from `web-ext-artifacts` to `dist/xpi`. Commit and tag the version. You can now install this XPI file in Firefox.
+Commit the dist file and tag the version. You can now install this XPI file in Firefox.
 
 ## Release
 
