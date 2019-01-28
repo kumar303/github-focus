@@ -12,7 +12,7 @@ Currently the extension only sends desktop notifications for:
 
 ## Installation
 
-You can install the latest built version into Firefox from the [dist](./dist) directory. These builds may be out of date.
+You can install the latest built version into Firefox from the [dist](./dist/xpi/) directory. These builds may be out of date.
 
 Alternatively, you can clone the repository and install the extension [from source into Firefox](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Temporary_Installation_in_Firefox).
 
