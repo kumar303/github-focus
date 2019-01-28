@@ -7,20 +7,22 @@ async function populateFormWithStoredData() {
 
 populateFormWithStoredData();
 
-document.querySelector('.saveButton').addEventListener('click', () => {
+document.querySelector('.saveButton').addEventListener('click', async () => {
   const infoContainer = document.querySelector('.info span');
   infoContainer.innerHTML = '';
 
   const option = getOption().value.trim();
 
   let error;
-  // Validation would go here.
-  // error = 'some message';
+  try {
+    await browser.storage.local.set({ option });
+  } catch (storageError) {
+    error = `Storage error: ${storageError}`;
+  }
   if (error) {
     infoContainer.innerHTML = `<span class="error">${error}</span>`;
   } else {
     infoContainer.innerHTML = 'Preferences saved';
-    browser.storage.local.set({ option });
   }
 
 });
