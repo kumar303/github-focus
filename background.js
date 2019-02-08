@@ -4,8 +4,11 @@ console.log(`${logId}: starting background script`);
 const HTTP_STATUS_RESET = 205;
 
 var accessToken;
-var notificationURLs = {};
-var readNotifications = {};
+// TODO: maybe prevent these mappings from growing in size for eternity?
+// We currently cannot clear them in checkNotifications() because an older,
+// unread notice might still be visible and that needs to be clickable.
+const notificationURLs = {};
+const readNotifications = {};
 
 async function getAccessToken() {
   if (!accessToken) {
@@ -47,9 +50,6 @@ async function apiRequest(url, requestOptions, callOptions) {
 async function checkNotifications() {
   try {
     console.log(`${logId}: Checking notifications`);
-
-    // Clear old notifications.
-    notificationURLs = {};
 
     // TODO: add a starting point timestamp ('since')
     const response = await apiRequest(
