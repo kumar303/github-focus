@@ -71,6 +71,12 @@ async function checkNotifications() {
         );
         return;
       }
+      if (notificationURLs[notification.id]) {
+        console.log(
+          `${logId}: notification ${notification.id} has already been shown`,
+        );
+        return;
+      }
 
       // Only show desktop notifications for the ones we care about.
       if (
