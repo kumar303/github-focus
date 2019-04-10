@@ -175,6 +175,7 @@ function getNotificationURL(notification) {
   }
 
   if (
+    notification.subject.type === 'Commit' ||
     notification.subject.type === 'Issue' ||
     notification.subject.type === 'PullRequest'
   ) {
@@ -185,9 +186,9 @@ function getNotificationURL(notification) {
   }
 
   console.error(
-    `${logId}: Not sure how to get URL for notification.subject.type ${
+    `${logId}: Not sure how to get URL for notification.subject.type="${
       notification.subject.type
-    }`,
+    }"`,
     notification,
   );
 }
