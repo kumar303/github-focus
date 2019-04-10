@@ -139,8 +139,9 @@ async function checkNotifications() {
 
 async function isOpenPR(notification) {
   const number = getIdFromApiUrl(notification.subject.url);
+  let response;
   try {
-    const response = await apiRequest(
+    response = await apiRequest(
       `${notification.repository.url}/pulls/${number}`,
     );
   } catch (error) {
