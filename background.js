@@ -139,9 +139,17 @@ async function checkNotifications() {
 
 async function isOpenPR(notification) {
   const number = getIdFromApiUrl(notification.subject.url);
-  const response = await apiRequest(
-    `${notification.repository.url}/pulls/${number}`,
-  );
+  try {
+    const response = await apiRequest(
+      `${notification.repository.url}/pulls/${number}`,
+    );
+  } catch (error) {
+    // The response above might be a 404 if the repo is private.
+    console.warn(
+      `${logId}: Assuming PR ${number} is open because of error: ${error}`,
+    );
+    return true;
+  }
   const pr = await response.json();
 
   const isOpen = pr.state === 'open';
