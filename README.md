@@ -1,14 +1,13 @@
 This is a browser extension that gives you desktop notifications for important [GitHub](https://github.com/) activity.
 
-Why? I watch a lot of repositories. This lets me keep up with all pull requests and issues but I don't want instant notifications for all of that activity.
-I do want instant notifications but only for specific types of acitivity and I want to pause them while not working. I couldn't find an existing solution for this.
+Why? I watch a lot of repositories. This lets me keep up with all pull requests and issues but I don't want instant notifications for all of that activity. I do want instant notifications but only for specific types of acitivity and I want to pause them while not working. I couldn't find an existing solution for this.
 
 Currently the extension only sends desktop notifications for:
 
-* Review requests
-* Mentions
-* Assignments
-* Comments on pull requests that you're participating in
+- Review requests
+- Mentions
+- Assignments
+- Comments on pull requests that you're participating in
 
 ## Installation
 
@@ -18,9 +17,7 @@ Alternatively, you can clone the repository and install the extension [from sour
 
 ## Usage
 
-Generate a GitHub [personal access token](https://github.com/settings/tokens/new?scopes=notifications&description=Notifier%20for%20GitHub%20extension) with the `notifications` scope.
-This [link](https://github.com/settings/tokens/new?scopes=notifications&description=GitHub%20Focus%20extension) will begin creating one.
-Go to `about:addons`, find the add-on, and click Preferences to enter your access token.
+Generate a GitHub personal access token with the `notifications` and `repo` scopes. This [link](https://github.com/settings/tokens/new?scopes=notifications,repo&description=GitHub%20Focus%20extension) will begin creating one. Go to `about:addons`, find the add-on, and click Preferences to enter your access token.
 
 You will now begin receiving desktop notifications.
 
@@ -35,9 +32,9 @@ yarn start
 
 ## TODO
 
-* Pause desktop notifications while not working or while trying to do uninterrupted work
-* Support Chrome
-* Make "important activity" configurable
+- Pause desktop notifications while not working or while trying to do uninterrupted work
+- Support Chrome
+- Make "important activity" configurable
 
 ## Build an alpha release
 
