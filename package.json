@@ -10,7 +10,7 @@
   "author": "Kumar McMillan",
   "license": "MPL-2.0",
   "devDependencies": {
-    "web-ext": "^2.9.2"
+    "web-ext": "^4.1.0"
   },
   "webExt": {
     "run": {
