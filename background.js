@@ -71,9 +71,13 @@ async function checkNotifications() {
   try {
     console.log(`${logId}: Checking notifications`);
 
-    // TODO: add a starting point timestamp ('since')
+    const sinceDate = new Date(
+      // Calculate 4 days ago.
+      Date.now() - 60 * 60 * (24 * 4) * 1000,
+    );
+
     const response = await apiRequest(
-      'https://api.github.com/notifications?participating=true',
+      `https://api.github.com/notifications?participating=true&since=${sinceDate.toISOString()}`,
     );
 
     const notifications = await response.json();
