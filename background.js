@@ -68,6 +68,14 @@ async function apiRequest(url, requestOptions, callOptions) {
 }
 
 async function checkNotifications() {
+  // TODO: make this configurable in the UI. Setting this to true
+  // was helpful for me when I was following a lot of repos.
+  const limitCommentsToPRsOnly = false;
+
+  // TODO: make this configurable in the UI. Setting this to true
+  // was helping me focus on just my specific work issues.
+  const onlyParticipating = false;
+
   try {
     console.log(`${logId}: Checking notifications`);
 
@@ -77,15 +85,13 @@ async function checkNotifications() {
     );
 
     const response = await apiRequest(
-      `https://api.github.com/notifications?participating=true&since=${sinceDate.toISOString()}`,
+      `https://api.github.com/notifications?participating=${
+        onlyParticipating ? 'true' : 'false'
+      }&since=${sinceDate.toISOString()}`,
     );
 
     const notifications = await response.json();
     let zeroNotifications = true;
-
-    // TODO: make this configurable in the UI. Setting this to true
-    // was helpful for me when I was following a lot of repos.
-    const limitCommentsToPRsOnly = false;
 
     // TODO: pagination, maybe
     notifications.forEach(async (notification) => {
