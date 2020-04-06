@@ -3,12 +3,27 @@ console.log(`${logId}: starting background script`);
 
 const HTTP_STATUS_RESET = 205;
 
+// By default, check every 10 minutes (the value is in milleseconds).
+// GitHub might request an adjustment to this interval.
+var POLL_INTERVAL = 60 * 1000 * 10;
+
 var accessToken;
 // TODO: maybe prevent these mappings from growing in size for eternity?
 // We currently cannot clear them in checkNotifications() because an older,
 // unread notice might still be visible and that needs to be clickable.
 const notificationURLs = {};
 const readNotifications = {};
+
+function setMinPollInterval(interval) {
+  if (interval > POLL_INTERVAL) {
+    // If the minimum allowed poll interval is longer than our current
+    // interval, lengthen the current interval.
+    console.log(
+      `${logId}: Old poll interval=${POLL_INTERVAL}; resetting to ${interval}`,
+    );
+    POLL_INTERVAL = interval;
+  }
+}
 
 async function getAccessToken() {
   if (!accessToken) {
@@ -44,6 +59,11 @@ async function apiRequest(url, requestOptions, callOptions) {
     );
   }
 
+  const maxPollInterval = response.headers.get('X-Poll-Interval');
+  if (maxPollInterval) {
+    setMinPollInterval(parseInt(maxPollInterval, 10) * 1000);
+  }
+
   return response;
 }
 
@@ -55,6 +75,7 @@ async function checkNotifications() {
     const response = await apiRequest(
       'https://api.github.com/notifications?participating=true',
     );
+
     const notifications = await response.json();
     let zeroNotifications = true;
 
@@ -65,9 +86,7 @@ async function checkNotifications() {
       }
       if (readNotifications[notification.id]) {
         console.log(
-          `${logId}: Relying on LOCAL cache for unread state of notification ${
-            notification.id
-          }`,
+          `${logId}: Relying on LOCAL cache for unread state of notification ${notification.id}`,
         );
         return;
       }
@@ -90,9 +109,7 @@ async function checkNotifications() {
           notification.subject.type !== 'PullRequest'
         ) {
           console.log(
-            `${logId}: Ignoring comment for subject type ${
-              notification.subject.type
-            }`,
+            `${logId}: Ignoring comment for subject type ${notification.subject.type}`,
           );
           return;
         }
@@ -106,9 +123,7 @@ async function checkNotifications() {
           !(await isOpenPR(notification))
         ) {
           console.log(
-            `${logId}: Ignoring non-open PR for notification ${
-              notification.id
-            }`,
+            `${logId}: Ignoring non-open PR for notification ${notification.id}`,
           );
           return;
         }
@@ -186,9 +201,7 @@ function getNotificationURL(notification) {
   }
 
   console.error(
-    `${logId}: Not sure how to get URL for notification.subject.type="${
-      notification.subject.type
-    }"`,
+    `${logId}: Not sure how to get URL for notification.subject.type="${notification.subject.type}"`,
     notification,
   );
 }
@@ -247,9 +260,7 @@ async function start() {
 
     browser.notifications.onClicked.addListener(handleNotificationClick);
 
-    // Check every 10 minutes:
-    const interval = 60 * 1000 * 10;
-    setInterval(checkNotifications, interval);
+    setInterval(checkNotifications, POLL_INTERVAL);
 
     // Kick off the first call:
     checkNotifications();
