@@ -6,7 +6,7 @@
   },
   "manifest_version": 2,
   "name": "GitHub Focus",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Receive desktop notifications for important GitHub activity",
   "icons": {
     "48": "icons/icons8-topic-push-notification-48.png",
@@ -23,9 +23,5 @@
     "default_icon": "icons/icons8-topic-push-notification-48.png",
     "default_title": "Check for GitHub notifications"
   },
-  "permissions": [
-    "notifications",
-    "storage",
-    "tabs"
-  ]
+  "permissions": ["notifications", "storage", "tabs"]
 }
