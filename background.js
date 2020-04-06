@@ -79,6 +79,10 @@ async function checkNotifications() {
     const notifications = await response.json();
     let zeroNotifications = true;
 
+    // TODO: make this configurable in the UI. Setting this to true
+    // was helpful for me when I was following a lot of repos.
+    const limitCommentsToPRsOnly = false;
+
     // TODO: pagination, maybe
     notifications.forEach(async (notification) => {
       if (!notification.unread) {
@@ -99,12 +103,20 @@ async function checkNotifications() {
 
       // Only show desktop notifications for the ones we care about.
       if (
+        // These are core reasons that helped me focus when I was getting
+        // a lot of notifications.
         notification.reason === 'assign' ||
         notification.reason === 'comment' ||
         notification.reason === 'mention' ||
-        notification.reason === 'review_requested'
+        notification.reason === 'review_requested' ||
+        // These are reasons that I'm experimenting with seeing now that
+        // my notification traffic has decreased a bit.
+        notification.reason === 'author' ||
+        notification.reason === 'manual' ||
+        notification.reason === 'subscribed'
       ) {
         if (
+          limitCommentsToPRsOnly &&
           notification.reason === 'comment' &&
           notification.subject.type !== 'PullRequest'
         ) {
@@ -161,6 +173,8 @@ async function isOpenPR(notification) {
     );
   } catch (error) {
     // The response above might be a 404 if the repo is private.
+    // However, this probably just means the token doesn't have repo
+    // permissions.
     console.warn(
       `${logId}: Assuming PR ${number} is open because of error: ${error}`,
     );
