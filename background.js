@@ -136,6 +136,15 @@ async function checkNotifications() {
           return;
         }
 
+        if (notification.subject.type === 'Release') {
+          // FIXME: I'm not sure how to get URLs for these notifications.
+          console.log(
+            `${logId}: Ignoring release notification ${notification.id}`,
+            notification,
+          );
+          return;
+        }
+
         // TODO: Check the PR assignee for review_requested and skip
         // ones not assigned to me. This would also require tracking
         // GitHub user names.
