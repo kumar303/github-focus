@@ -2,6 +2,12 @@ This is a browser extension that gives you desktop notifications for important [
 
 Why? I watch a lot of repositories. This lets me keep up with all pull requests and issues but I don't want instant notifications for all of that activity. I do want instant notifications but only for specific types of acitivity and I want to pause them while not working. I couldn't find an existing solution for this.
 
+<hr>
+
+**UPDATE from 2021-02-10**: I have been using [Gitify](https://github.com/manosim/gitify) and it works for what I need right now, especially with the *only participating* option. I'll leave this extension source up in case someone wants to play around with low-level notification tweaks.
+
+<hr>
+
 Currently the extension only sends desktop notifications for:
 
 - Review requests
